@@ -1,0 +1,751 @@
+/* ==========================================================================
+   1. VARIABEL WARNA (:root) - Bagian ini bisa dimodifikasi mahasiswa jika ingin ganti tema warna
+   ========================================================================== */
+:root {
+    --primary-color: #1b365d;       /* Deep Navy Blue */
+    --secondary-color: #d4af37;     /* Muted Gold */
+    --accent-color: #c86446;        /* Soft Terracotta */
+    --bg-main: #fbf9f6;             /* Off-white/parchment tone */
+    --bg-card: #ffffff;             /* Putih bersih */
+    --text-main: #1a1a1a;           /* Almost Black */
+    --text-muted: #666666;          /* Soft Gray */
+    --max-width: 1140px;            /* Lebar maksimal konten dekstop */
+    --transition: all 0.3s ease;    /* Efek transisi default */
+}
+
+/* ==========================================================================
+   2. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth; /* Fitur bawaan CSS jika JS mati */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+    background-color: var(--bg-main);
+}
+
+body {
+    line-height: 1.6;
+    padding-top: 70px; /* Jarak agar konten tidak tertutup navbar */
+}
+
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* Fallback komponen gambar kosong */
+.image-fallback {
+    display: none; /* Tersembunyi secara default, muncul jika dipicu onerror */
+    width: 100%;
+    height: 300px;
+    background-color: #e0e0e0;
+    color: var(--text-muted);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 20px;
+    border: 2px dashed #ccc;
+}
+
+/* ==========================================================================
+   3. TOMBOL & REUSABLE COMPONENTS
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: var(--transition);
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #122542;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.badge {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: #333;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 50px auto;
+}
+
+.section-header h2 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.section-header p {
+    color: var(--text-muted);
+}
+
+/* Struktur Grid Universal untuk Card */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: var(--bg-card);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.card-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+/* ==========================================================================
+   4. NAVBAR
+   ========================================================================== */
+.navbar {
+    background-color: var(--bg-card);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 70px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-links a {
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 5px 0;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Hamburger mmenu mobile */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    gap: 5px;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+/* ==========================================================================
+   5. HERO SECTION
+   ========================================================================== */
+.hero-section {
+    padding: 60px 0;
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+}
+
+.hero-container {
+    display: flex;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 40px;
+    align-items: center;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    color: var(--primary-color);
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.hero-content .tagline {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+.hero-content .description {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-image img {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-height: 480px;
+    width: 100%;
+}
+
+/* ==========================================================================
+   6. MASALAH SECTION
+   ========================================================================== */
+.masalah-section {
+    padding: 80px 0;
+    background-color: #f5f2eb; /* Warna agak kontras sedikit */
+}
+
+.card-masalah {
+    border-top: 4px solid var(--accent-color);
+}
+
+.target-box {
+    margin-top: 40px;
+    background-color: var(--bg-card);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    border-left: 5px solid var(--secondary-color);
+}
+
+/* ==========================================================================
+   7. SOLUSI SECTION
+   ========================================================================== */
+.solusi-section {
+    padding: 80px 0;
+}
+
+.solusi-wrapper {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.solusi-image, .solusi-content {
+    flex: 1;
+}
+
+.solusi-image img {
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.solusi-content h2 {
+    color: var(--primary-color);
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.solusi-content h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    border-bottom: 2px solid var(--secondary-color);
+    display: inline-block;
+}
+
+.alur-list {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.alur-list li, .manfaat-list li {
+    margin-bottom: 8px;
+}
+
+.manfaat-list {
+    list-style-type: square;
+    margin-left: 20px;
+}
+
+/* ==========================================================================
+   8. FITUR SECTION
+   ========================================================================== */
+.fitur-section {
+    padding: 80px 0;
+    background-color: #f0edf5; /* Variasi latar belakang */
+}
+
+.featured-card {
+    grid-column: span 1; /* Default responsive */
+    border-left: 4px solid var(--primary-color);
+    background-color: #fffdf9;
+}
+
+/* Jika lebar layar mendukung, card misi dibuat memanjang */
+@media (min-width: 900px) {
+    .card-grid .featured-card {
+        grid-column: span 2;
+    }
+}
+
+/* ==========================================================================
+   9. AKSES SECTION
+   ========================================================================== */
+.akses-section {
+    padding: 80px 0;
+}
+
+.akses-box {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 50px 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(27, 54, 93, 0.2);
+}
+
+.akses-box h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.akses-box p {
+    margin-bottom: 35px;
+    opacity: 0.9;
+}
+
+.akses-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-action {
+    padding: 15px 30px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.btn-apk {
+    background-color: var(--secondary-color);
+    color: #333;
+}
+
+.btn-apk:hover {
+    background-color: #ffe07d;
+    transform: scale(1.03);
+}
+
+.btn-web {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.btn-web:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.03);
+}
+
+.btn-demo {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn-demo:hover {
+    background-color: #e07353;
+    transform: scale(1.03);
+}
+
+/* ==========================================================================
+   10. TIM SECTION
+   ========================================================================== */
+.tim-section {
+    padding: 80px 0;
+}
+
+.tim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.card-tim {
+    text-align: center;
+    padding: 25px 20px;
+}
+
+.avatar-wrapper {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+}
+
+.avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-fallback {
+    font-size: 50px;
+    color: #ccc;
+}
+
+.card-tim h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.card-tim .role {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   11. FOOTER
+   ========================================================================== */
+.footer {
+    background-color: #111111;
+    color: #ffffff;
+    padding: 40px 0 20px 0;
+    font-size: 14px;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.footer-info h3 {
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.footer-bottom {
+    width: 100%;
+    border-top: 1px solid #222222;
+    padding-top: 20px;
+    opacity: 0.7;
+}
+
+/* ==========================================================================
+   12. MINI LMS STYLE (Untuk halaman belajar.html)
+   ========================================================================== */
+.lms-wrapper {
+    display: flex;
+    min-height: calc(100vh - 70px);
+}
+
+/* Sidebar LMS */
+.lms-sidebar {
+    width: 320px;
+    background-color: var(--bg-card);
+    border-right: 1px solid #e5e0d8;
+    padding: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 70px);
+    position: sticky;
+    top: 70px;
+}
+
+.lms-sidebar h3 {
+    color: var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--bg-main);
+}
+
+.menu-bab {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.bab-title {
+    font-weight: bold;
+    padding: 8px 10px;
+    background-color: var(--bg-main);
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.subbab-list {
+    list-style: none;
+    padding-left: 10px;
+    margin-top: 5px;
+}
+
+.subbab-list li a {
+    display: block;
+    padding: 6px 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.subbab-list li a:hover, .subbab-list li.active a {
+    background-color: #f0edf5;
+    color: var(--accent-color);
+}
+
+/* Konten Utama LMS */
+.lms-content {
+    flex: 1;
+    padding: 40px;
+    background-color: var(--bg-card);
+    overflow-y: auto;
+}
+
+.content-header-lms {
+    border-bottom: 2px solid var(--bg-main);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.content-header-lms h1 {
+    color: var(--primary-color);
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.content-header-lms p {
+    color: var(--text-muted);
+}
+
+.bab-section-content {
+    margin-bottom: 60px;
+    padding: 25px;
+    background-color: var(--bg-main);
+    border-radius: 8px;
+    border-left: 5px solid var(--primary-color);
+}
+
+.bab-section-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.media-placeholder {
+    margin: 20px 0;
+    background: #eaeaea;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.media-placeholder img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Rasio 16:9 */
+    height: 0;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.btn-kuis {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: var(--transition);
+}
+
+.btn-kuis:hover {
+    background-color: #a84b30;
+}
+
+/* ==========================================================================
+   13. RESPONSIVE MEDIA QUERIES (Untuk Tampilan Mobile)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Navbar Mobile Toggle */
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--bg-card);
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+        transition: 0.3s;
+        padding: 20px 0;
+        gap: 15px;
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    /* Animasi Tombol Hamburger jika aktif */
+    .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+    .menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* Layout Hero Menjadi 1 Kolom */
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .hero-content h1 { font-size: 36px; }
+    .hero-buttons { justify-content: center; }
+
+    /* Layout Solusi Menjadi 1 Kolom */
+    .solusi-wrapper {
+        flex-direction: column;
+    }
+
+    /* LMS Web Mini Mobile Adjustment */
+    .lms-wrapper {
+        flex-direction: column;
+    }
+    
+    .lms-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        border-right: none;
+        border-bottom: 1px solid #e5e0d8;
+    }
+
+    .lms-content {
+        padding: 20px;
+    }
+}
+
+/* Animasi Scroll Sederhana Menggunakan Klasik JS-CSS */
+.scroll-ani {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-ani.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
